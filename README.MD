@@ -36,3 +36,6 @@ https://www.reddit.com/r/LINKTrader/comments/7ou4p2/install_chainlink_node_on_am
 - All is revealed. Dealer should get extra negative points for not knowing something they said they knew
 
 
+## TODO
+Do this! Send transaction
+https://ethereum.stackexchange.com/questions/70240/how-to-send-transaction-with-web3-py
