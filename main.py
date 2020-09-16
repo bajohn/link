@@ -14,7 +14,7 @@ def main():
         address=contractAddress,
         abi=abi
     )
-    sendTx(w3, myContract, 50)
+    sendTx(w3, myContract, 37)
     resp = myContract.functions.retrieve().call()
     print('check')
     print(resp)
@@ -33,7 +33,8 @@ def sendTx(w3, contract, valToSend):
     print('tx sent')
     receipt = w3.eth.waitForTransactionReceipt(hexTxHash.hex())
     print('tx receipt found!')
-    print(receipt)
+    print(receipt.transactionHash.hex())
+
     return receipt
 
 
