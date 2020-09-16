@@ -1,5 +1,7 @@
 from web3 import Web3, HTTPProvider
-from sensitive import private_key
+from sensitive import PRIVATE_KEY, MY_ACCOUNT, CONTRACT_ADDRESS
+
+
 def main():
     # w3 = Web3(Web3.EthereumTesterProvider())
     w3 = Web3(HTTPProvider(
@@ -7,18 +9,33 @@ def main():
     ))
 
     abi = getAbi()
-    contractAddress = '0x63b23019Ff45EDa920c84BC89f5448843e85CC95'
+    contractAddress = CONTRACT_ADDRESS
     myContract = w3.eth.contract(
-    address=contractAddress,
-    abi=abi
+        address=contractAddress,
+        abi=abi
     )
-
-    resp = myContract.functions.store(3).call()
-    print('called')
-    print(resp)
+    sendTx(w3, myContract, 50)
     resp = myContract.functions.retrieve().call()
-    print('called')
+    print('check')
     print(resp)
+
+# Binary transaction ID returned b
+# def getTransaction(bTx):
+
+
+def sendTx(w3, contract, valToSend):
+
+    tx = contract.functions.store(valToSend).buildTransaction(
+        {'nonce': w3.eth.getTransactionCount(MY_ACCOUNT)})
+
+    signed_tx = w3.eth.account.signTransaction(tx, private_key=PRIVATE_KEY)
+    hexTxHash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
+    print('tx sent')
+    receipt = w3.eth.waitForTransactionReceipt(hexTxHash.hex())
+    print('tx receipt found!')
+    print(receipt)
+    return receipt
+
 
 def getAbi():
     return [
@@ -49,6 +66,7 @@ def getAbi():
             "type": "function"
         }
     ]
+
 
 if __name__ == "__main__":
     main()
