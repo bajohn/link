@@ -7,6 +7,10 @@ Chainlink->AWS Link
 https://www.reddit.com/r/LINKTrader/comments/7ou4p2/install_chainlink_node_on_amazon_aws_free_tier/
 
 
+# Repo instructions
+Installation
+- insert private key using `sensitive.py` at the root directory. You can use `sensitve_example.py` as a model.
+
 # Ideas
 ## Shipping contract completion app
 ### Concept:
@@ -37,5 +41,5 @@ https://www.reddit.com/r/LINKTrader/comments/7ou4p2/install_chainlink_node_on_am
 
 
 ## TODO
-Do this! Send transaction
+Do this! Send transaction. Need to import existing wallet with eth, presumably.
 https://ethereum.stackexchange.com/questions/70240/how-to-send-transaction-with-web3-py
