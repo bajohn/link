@@ -26,12 +26,41 @@ Chris's video, verifying that the ad is in the video and is up to her standards.
 with some auto-verification via some kind of bot that searches for keywords, etc.
 - The contract is funded by Alice (?), who may need some staking to fund several of these contracts.
 - Chainlink uses an Oracle node to watch the viewcount, and when it passes the set amount of views, the contract executes.
-
+- Could also use an oracle to determine whether a video is still online, but this isn't explicitly needed!
 Is that it?
 
 # To build:
 
+- Sample contract 1
+    - Constructor accepting
+        - Two wallet addresses, for buyer and seller
+    - A variable `sensorValue` that changes via an externally accessible getter/setter
+    - A hardcoded constant value `payoutThreshold`, 
+    - A getter/setter like the `StoreValue` we've already used
+    - A boolean `hasPaidOut` so payout only happens once
+    - The `sensorValue` setter checks the `payoutThreshold` and `hasPaidOut` 
 
+- Sample contract 2 (optional stepping stone)
+    - Use sample contract 1, except sensorvalue pulls in something real like wall clock time, paying out when
+    the clock passes a hardcoded time.
+
+- Actual contract
+    - Constructor accepting:
+        - the two wallet addresses, for buyer and seller
+        - a video link
+        - an array of unmet targets. Something like `[views: payout]`, like
+        ```
+        [
+            1000: 10,
+            10000: 100,
+            100000: 1000,
+        ]
+        ```
+    - A video verification callback, requiring the address of ad buyer. 
+        - The buyer could fund the contract here, funding the maximum amount of payout
+    - A GET function to retrieve the video URL
+    - A GET function to retrieve the met targets
+    - A GET function to retrieve the unmet targets
 
 
 
