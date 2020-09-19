@@ -13,7 +13,7 @@ made/deployed in web browser.
 def main():
     # w3 = Web3(Web3.EthereumTesterProvider())
     w3 = Web3(HTTPProvider(
-        'https://ropsten.infura.io/v3/50365d67b0b5445e8eef86ca07e49976'
+        'https://kovan.infura.io/v3/f26caa7ebc1e424ab84e48c356e9158d'
     ))
     compiledSol = getCompiledContract()
     print('check')
@@ -89,7 +89,6 @@ def getCompiledContract():
             }
         }
     })
-
 
 
 if __name__ == "__main__":
