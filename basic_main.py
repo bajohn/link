@@ -1,7 +1,10 @@
 from web3 import Web3, HTTPProvider
 from sensitive import PRIVATE_KEY, MY_ACCOUNT, CONTRACT_ADDRESS
 
-
+'''
+Interact with fixed smart contract 
+made/deployed in web browser.
+'''
 def main():
     # w3 = Web3(Web3.EthereumTesterProvider())
     w3 = Web3(HTTPProvider(

@@ -11,7 +11,14 @@ https://www.reddit.com/r/LINKTrader/comments/7ou4p2/install_chainlink_node_on_am
 # Repo instructions
 Installation
 - insert private key using `sensitive.py` at the root directory. You can use `sensitve_example.py` as a model.
-
+- Install solidity 
+    ```Solidity compiler 
+    brew update
+    brew upgrade
+    brew tap ethereum/ethereum
+    brew install solidity
+    ```
+    
 # Ideas
 ## Advertising contract execution app (AdChain)
 - Alice the advertiser wants to advertise a product, and knows Chris the content creator has a solid following on Youtube.
@@ -100,3 +107,4 @@ attempted chainlink ropsten testnet faucent tx's
 0xde593aaa128136b76e05ecfe98c0dc51e2400cddf382226fa4e7e6715357b6de
 0x8f4fa5dc6ca703e19b3df8c7ad31a99d8cc5c589d7758c1e82293a27a968f30e
 0x154b39c6553e202d5ebf38f54a9e1478871e3883b243321d93eeb592cc732300
+
