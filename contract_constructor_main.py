@@ -7,6 +7,7 @@ from sensitive import PRIVATE_KEY, MY_ACCOUNT
 '''
 Interact with fixed smart contract
 made/deployed in web browser.
+Set value in constructor and read.
 '''
 
 
