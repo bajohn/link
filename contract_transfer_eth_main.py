@@ -11,15 +11,17 @@ to hardcoded addresses
 
 
 def main():
-    # senderAddr = '0x47a50df6f06C1837582a28630eF58fC66d1F25D1'
-
-    receiverAddr = '0x068528704bAFD8A4B42985Baf87b8877fBea2E35'
 
     w3 = Web3(HTTPProvider(
         'https://kovan.infura.io/v3/f26caa7ebc1e424ab84e48c356e9158d'
     ))
+    receiverAddr = '0x068528704bAFD8A4B42985Baf87b8877fBea2E35' # unused here
+    account = w3.eth.account.privateKeyToAccount(
+        PRIVATE_KEY)  # This signs everything
+    w3.eth.defaultAccount = account.address
+
     compiledSol = compiledContract()
-    print('check')
+
     abi = json.loads(compiledSol['contracts']['SampleStore.sol']
                      ['SampleStore']['metadata'])['output']['abi']
 
@@ -36,37 +38,30 @@ def main():
         abi=abi
     )
 
-    fundHash = fundContractTxHash(w3, contractHash)
-    print(fundHash)
+    fundHash = fundContractTxHash(w3, deployedContract)
 
-    return True
     deployedNum = deployedContract.functions.retrieve().call()
-    print('deployed num')
+    print('Deposit amount recorded on-chain')
     print(deployedNum)
 
-    # print(resp['contracts']['SampleStore.sol']['SampleStore']['abi'])
 
-
-def fundContractTxHash(w3, contractHash):
+def fundContractTxHash(w3, deployedContract):
     nonce = w3.eth.getTransactionCount(MY_ACCOUNT)
-    print('nonce')
-    print(nonce)
-    signed_tx = w3.eth.account.signTransaction(dict(
-        nonce=nonce,
-        gasPrice=w3.eth.gasPrice,
-        gas=100000,
-        to=contractHash,
-        value=12345,
-        data=b'',
-    ),
-        private_key=PRIVATE_KEY
+    tx = deployedContract.functions.deposit().buildTransaction(
+        {
+            'value': 336677,
+            'nonce': nonce}
     )
 
+    signed_tx = w3.eth.account.signTransaction(tx, private_key=PRIVATE_KEY)
     hexTxHash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-    print('funding tx sent')
+    print('fund tx sent')
     receipt = w3.eth.waitForTransactionReceipt(hexTxHash.hex())
-    print('funding tx receipt found!')
-    return receipt.transactionHash.hex()
+    print('fund tx receipt found!')
+
+    return dict(
+        txHash=receipt.transactionHash.hex(),
+    )
 
 
 def newContractReceipt(w3, contract, receiverAddress):
@@ -78,21 +73,21 @@ def newContractReceipt(w3, contract, receiverAddress):
     print('nonce')
     print(nonce)
     tx = contract.constructor(receiverAddress).buildTransaction(
-        {'nonce': nonce})
+        {
+            'nonce': nonce
+        }
+    )
 
     signed_tx = w3.eth.account.signTransaction(tx, private_key=PRIVATE_KEY)
     hexTxHash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-    print('tx sent')
+    print('new contract tx sent')
     receipt = w3.eth.waitForTransactionReceipt(hexTxHash.hex())
-    print('tx receipt found!')
+    print('new contract tx receipt found!')
 
     return dict(
         txHash=receipt.transactionHash.hex(),
         contractHash=receipt.contractAddress
     )
-
-
-# def createContract(w3, compiled_sol):
 
 
 def compiledContract():
@@ -126,6 +121,13 @@ def compiledContract():
                         receiver.transfer(sendVal);
                     }
 
+                    function deposit() public payable {
+                        sendVal = uint256(msg.value);
+                    }
+
+                    function retrieve() public view returns (uint256){
+                        return sendVal;
+                    }
 
                     // fallback function 
                     fallback () external payable {
