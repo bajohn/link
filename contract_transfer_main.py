@@ -22,11 +22,19 @@ def main():
 
     bytecode = compiledSol['contracts']['SampleStore.sol']['SampleStore']['evm']['bytecode']['object']
 
-    sampleContract = w3.eth.contract(abi=abi, bytecode=bytecode)
+    localContract = w3.eth.contract(abi=abi, bytecode=bytecode)
 
-    receipt = newContractReceipt(w3, sampleContract)
-
-    print(receipt)
+    receipt = newContractReceipt(w3, localContract)
+    contractHash = receipt['contractHash']
+    print('Contract hash')
+    print(contractHash)
+    deployedContract = w3.eth.contract(
+        address=contractHash,
+        abi=abi
+    )
+    deployedNum = deployedContract.functions.retrieve().call()
+    print('deployed num')
+    print(deployedNum)
 
     # print(resp['contracts']['SampleStore.sol']['SampleStore']['abi'])
 
@@ -36,7 +44,7 @@ def newContractReceipt(w3, contract):
     Create the contract
     Return the txHash and address of the new contract
     '''
-    tx = contract.constructor().buildTransaction(
+    tx = contract.constructor(12).buildTransaction(
         {'nonce': w3.eth.getTransactionCount(MY_ACCOUNT)})
 
     signed_tx = w3.eth.account.signTransaction(tx, private_key=PRIVATE_KEY)
@@ -44,7 +52,6 @@ def newContractReceipt(w3, contract):
     print('tx sent')
     receipt = w3.eth.waitForTransactionReceipt(hexTxHash.hex())
     print('tx receipt found!')
-    print()
 
     return dict(
         txHash=receipt.transactionHash.hex(),
@@ -59,7 +66,7 @@ def compiledContract():
     '''
     Compile a hardcoded contract, return compiled binary
     '''
-    
+
     return compile_standard({
         "language": "Solidity",
         "sources": {
@@ -70,7 +77,9 @@ def compiledContract():
                 contract SampleStore {
 
                     uint256 number;
-
+                    constructor(uint256 _number) {
+                        number = _number;
+                    }
                     function store(uint256 num) public {
                         number = num;
                     }
