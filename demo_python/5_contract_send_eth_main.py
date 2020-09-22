@@ -37,9 +37,7 @@ def main():
         address=contractHash,
         abi=abi
     )
-    # resp = deployedContract.functions.send().call()
-    # print('empty send')
-    # print(resp)
+
     fundHash = fundContractTxHash(w3, deployedContract)
 
     deployedNum = deployedContract.functions.retrieve().call()
@@ -55,7 +53,8 @@ def main():
         }
     )
     print(ethSendTx)
-    signed_tx = w3.eth.account.signTransaction(ethSendTx, private_key=PRIVATE_KEY)
+    signed_tx = w3.eth.account.signTransaction(
+        ethSendTx, private_key=PRIVATE_KEY)
     hexTxHash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
     print('eth send tx sent')
     receipt = w3.eth.waitForTransactionReceipt(hexTxHash.hex())

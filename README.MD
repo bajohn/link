@@ -8,9 +8,15 @@ https://www.reddit.com/r/LINKTrader/comments/7ou4p2/install_chainlink_node_on_am
 
 #chainlink
 
+# Repo directories
+- `/demo_python` Various python scripts I used to learn how to interact with web3. To run these scripts:
+    - `cd demo_python`
+    - pipenv install
+    - Insert private key and corresponding account address into `sensitive.py` at the root directory. You can use `sensitve_example.py` as a model.
+    - Demo scripts are prefixed with an integer. Run via `pipenv run python {script name}`, for example `pipenv run python 5_contract_send_eth_main.py`
 # Repo instructions
 Installation
-- insert private key using `sensitive.py` at the root directory. You can use `sensitve_example.py` as a model.
+
 - Install solidity 
     ```Solidity compiler 
     brew update
