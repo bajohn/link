@@ -39,7 +39,7 @@ Is that it?
 
 # To build:
 
-- Sample contract 1
+- Sample contract 1 
     - Constructor accepting
         - Two wallet addresses, for buyer and seller
     - A variable `sensorValue` that changes via an externally accessible getter/setter
@@ -47,7 +47,7 @@ Is that it?
     - A getter/setter like the `StoreValue` we've already used
     - A boolean `hasPaidOut` so payout only happens once
     - The `sensorValue` setter checks the `payoutThreshold` and `hasPaidOut` 
-
+✅ Done via `5_contract_send_eth_main.py`. Note- need to sign all transactions and send raw in Infura!.
 - Sample contract 2 (optional stepping stone)
     - Use sample contract 1, except sensorvalue pulls in something real like wall clock time, paying out when
     the clock passes a hardcoded time.
