@@ -56,7 +56,11 @@
  * Zone JS is required by default for Angular itself.
  */
 import 'zone.js/dist/zone';  // Included with Angular CLI.
-
+declare global {
+    interface Window {
+      TruffleContract: any;
+    }
+  }
 
 /***************************************************************************************************
  * APPLICATION IMPORTS

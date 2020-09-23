@@ -15,6 +15,8 @@ https://www.reddit.com/r/LINKTrader/comments/7ou4p2/install_chainlink_node_on_am
     - Insert private key and corresponding account address into `sensitive.py` at the root directory. You can use `sensitve_example.py` as a model.
     - Demo scripts are prefixed with an integer. Run via `pipenv run python {script name}`, for example `pipenv run python 5_contract_send_eth_main.py`
 # Repo instructions
+TODO: clean this up! Currently treating this like a notes section.
+
 Installation
 
 - Install solidity 
@@ -24,6 +26,15 @@ Installation
     brew tap ethereum/ethereum
     brew install solidity
     ```
+
+-  AngularCLI 
+```
+npm install -g @angular/cli 
+```
+- Truffle CLI 
+```
+npm install -g truffle
+```
     
 # Ideas
 ## Advertising contract execution app (AdChain)
@@ -46,6 +57,7 @@ Is that it?
 # To build:
 
 - Sample contract 1 
+✅ Done via `5_contract_send_eth_main.py`. Note- need to sign all transactions and send raw in Infura!.
     - Constructor accepting
         - Two wallet addresses, for buyer and seller
     - A variable `sensorValue` that changes via an externally accessible getter/setter
@@ -53,7 +65,7 @@ Is that it?
     - A getter/setter like the `StoreValue` we've already used
     - A boolean `hasPaidOut` so payout only happens once
     - The `sensorValue` setter checks the `payoutThreshold` and `hasPaidOut` 
-✅ Done via `5_contract_send_eth_main.py`. Note- need to sign all transactions and send raw in Infura!.
+
 - Sample contract 2 (optional stepping stone)
     - Use sample contract 1, except sensorvalue pulls in something real like wall clock time, paying out when
     the clock passes a hardcoded time.
