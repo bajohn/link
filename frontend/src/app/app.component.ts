@@ -19,12 +19,27 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
 
-
+    const accounts = await this.web3.eth.getAccounts();
+    const defaultAccount = accounts[0];
+    console.log(accounts);
     const storeContract = sampleStore.abi as AbiItem[]; // explicitly typing, something is wrong with auto-detect
 
     const contract = new this.web3.eth.Contract(storeContract);
-    console.log(contract);
-    console.log(contract.methods);
+
+    const contractToSend = await contract.deploy({
+      data: sampleStore.bytecode
+    })
+    console.log(contractToSend);
+    const contractReceipt = await contractToSend.send(
+      {
+        'from': defaultAccount
+      }
+    );
+    console.log('Done sending');
+    console.log(contractReceipt);
+
+    // console.log(resp);
+    // console.log(contract.methods);
 
   }
 
