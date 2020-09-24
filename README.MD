@@ -116,6 +116,12 @@ Turns out source of truth for such a quiz game would be really hard! And not too
 
 
 ## Working 
+Create a new contract at 
+http://localhost:4200
+
+Or access an existing contract at:
+http://localhost:4200/contract/0xd9455befed4a124b0515881806ba159b3966cdbb
+
 ✅ Compile contract using truffle / chainlink truffle box
 ✅ Insert compiled contract into Angular source code
 ✅ Deploy contract from web3-integrated frontend using Metamask and pure browser Javascript
