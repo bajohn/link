@@ -115,14 +115,15 @@ Turns out source of truth for such a quiz game would be really hard! And not too
 - Best case would be the money is held in escrow by Chainlink's infrastructure, released to the deliverer when completed, refunded to consumer if the window passes.
 
 
+## Working 
+✅ Compile contract using truffle / chainlink truffle box
+✅ Insert compiled contract into Angular source code
+✅ Deploy contract from web3-integrated frontend using Metamask and pure browser Javascript
+✅ Trigger contract call to Chainlink Oracle, which pulls from a simple API
+✅ Check the result of this API call
 
 ## TODO
-Do this! Send transaction. Need to import existing wallet with eth, presumably.
-https://ethereum.stackexchange.com/questions/70240/how-to-send-transaction-with-web3-py
+- Integrate with credentialed API such as Youtube
+- Figure out how polling works, aka how to trigger on an API event without constantly polling.
 
 ## Notes
-attempted chainlink ropsten testnet faucent tx's
-0xde593aaa128136b76e05ecfe98c0dc51e2400cddf382226fa4e7e6715357b6de
-0x8f4fa5dc6ca703e19b3df8c7ad31a99d8cc5c589d7758c1e82293a27a968f30e
-0x154b39c6553e202d5ebf38f54a9e1478871e3883b243321d93eeb592cc732300
-

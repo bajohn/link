@@ -1,3 +1,33 @@
-<h1>
-  Hello world
-</h1>
+<div>
+  <button (click)="deployContract()">
+    Deploy contract
+  </button>
+</div>
+<div *ngIf="isLoading">
+  Deploying...
+</div>
+<div *ngIf="isDeployed">
+  <div>
+    Contract deployed!
+  </div>
+
+  <div>
+    <a [href]="getContractAddress()" target="_blank">
+      View contract on etherscan
+    </a>
+  </div>
+  <div>
+    <button (click)="requestUpdatedPrice()">
+      Request update from Oracle
+    </button>
+  </div>
+  <div>
+    <button (click)="checkPrice()">
+      Check on chain price
+    </button>
+  </div>
+
+  <div *ngIf="priceFromChain >= 0">
+    Returned price: {{priceFromChain}}
+  </div>
+</div>

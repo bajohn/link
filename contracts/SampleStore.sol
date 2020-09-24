@@ -1,4 +1,4 @@
-pragma solidity ^0.5.16;
+pragma solidity ^0.6.6;
 // SPDX-License-Identifier: MIT
 contract SampleStore {
 
