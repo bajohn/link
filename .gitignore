@@ -1,3 +1,5 @@
 demo_python/sensitive.py
 build
 node_modules
+terraform/.terraform
+lambdas_compiled

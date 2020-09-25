@@ -28,14 +28,36 @@ Installation
     ```
 
 -  AngularCLI 
-```
-npm install -g @angular/cli 
-```
+    ```
+    npm install -g @angular/cli 
+    ```
 - Truffle CLI 
-```
-npm install -g truffle
-```
-    
+    ```
+    npm install -g truffle
+    ```
+
+- Terraform
+    ```
+    pipenv install
+    ```
+    ```
+    ./scripts/deploy.sh --libs=true
+    ```
+    ```
+    cd terraform
+    ```
+    ```
+    terraform init
+    ```
+    ```
+    terraform apply
+    ```
+- Insert youtube API key into AWS secrets manager, secret name `youtube-cred`
+    ```
+    {
+    "api_key": <insert youtube api key>
+    }
+    ```
 # Ideas
 ## Advertising contract execution app (AdChain)
 - Alice the advertiser wants to advertise a product, and knows Chris the content creator has a solid following on Youtube.
