@@ -42,7 +42,7 @@ resource "aws_api_gateway_resource" "resource" {
 resource "aws_api_gateway_method" "method" {
   rest_api_id   = aws_api_gateway_rest_api.api.id
   resource_id   = aws_api_gateway_resource.resource.id
-  http_method   = "GET"
+  http_method   = "ANY"
   authorization = "NONE"
   request_parameters = {
     "method.request.path.object" = true
@@ -274,3 +274,89 @@ resource "aws_acm_certificate" "website_cert" {
 }
 
 
+#####################################
+## Dynamo tables for backend
+
+resource "aws_dynamodb_table" "user-table" {
+  name = "adbounty-users"
+  hash_key = "ethAddress"
+  read_capacity = 1
+  write_capacity = 1
+
+  attribute {
+    name = "ethAddress"
+    type = "S"
+  }
+}
+
+resource "aws_dynamodb_table" "connected-contract" {
+  name = "adbounty-connected-contract"
+  hash_key = "ethAddress"
+  read_capacity = 1
+  write_capacity = 1
+
+  attribute {
+    name = "ethAddress"
+    type = "S"
+  }
+}
+
+resource "aws_dynamodb_table" "contract-template-owned" {
+  name = "adbounty-contract-template-owned"
+  hash_key = "ethAddress"
+  read_capacity = 1
+  write_capacity = 1
+
+  attribute {
+    name = "ethAddress"
+    type = "S"
+  }
+}
+
+resource "aws_dynamodb_table" "contract-template-available" {
+  name = "adbounty-contract-template-available"
+  hash_key = "ethAddress"
+  read_capacity = 1
+  write_capacity = 1
+
+  attribute {
+    name = "ethAddress"
+    type = "S"
+  }
+}
+
+resource "aws_dynamodb_table" "contract" {
+  name = "adbounty-contract"
+  hash_key = "ethAddress"
+  read_capacity = 1
+  write_capacity = 1
+
+  attribute {
+    name = "ethAddress"
+    type = "S"
+  }
+}
+
+resource "aws_dynamodb_table" "contract-template" {
+  name = "adbounty-contract-template"
+  hash_key = "id"
+  read_capacity = 1
+  write_capacity = 1
+
+  attribute {
+    name = "id"
+    type = "S"
+  }
+}
+
+resource "aws_dynamodb_table" "jobs" {
+  name = "adbounty-jobs"
+  hash_key = "contractId"
+  read_capacity = 1
+  write_capacity = 1
+
+  attribute {
+    name = "contractId"
+    type = "S"
+  }
+}
