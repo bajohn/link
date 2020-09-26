@@ -31,18 +31,18 @@ def handler(event, context):
         videoId=videoId,
         viewCount=viewCount
     )
-    # headers = event['headers'] if 'headers' in event else {}
-    # headers.update({
-    #     'access-control-allow-headers': 'authorizationtoken,content-type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
-    #     'access-control-allow-methods': 'GET,OPTIONS',
-    #     'access-control-allow-origin': 'ad-bounty.com,localhost'
+    # CORS: allow all origins to pull
+    headers = {
+        'access-control-allow-headers': 'authorizationtoken,content-type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+        'access-control-allow-methods': 'GET,OPTIONS',
+        'access-control-allow-origin': '*'
 
-    # })
+    }
 
     return {
         "isBase64Encoded": False,
         "statusCode": 200,
-        "headers": {},
+        "headers": headers,
         "body": json.dumps(data)
     }
 

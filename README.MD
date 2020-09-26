@@ -151,7 +151,7 @@ http://localhost:4200/contract/0xd9455befed4a124b0515881806ba159b3966cdbb
 ✅ Check the result of this API call
 
 ## TODO
-- Integrate with credentialed API such as Youtube
+✅ - Integrate with credentialed API such as Youtube
 - Figure out how polling works, aka how to trigger on an API event without constantly polling.
 
 ## Notes

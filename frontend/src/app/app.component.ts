@@ -105,5 +105,11 @@ export class AppComponent implements OnInit {
 
   }
 
+  async getViewCount(){
+    const resp = await fetch('https://h8a4i8udc3.execute-api.us-east-1.amazonaws.com/prod/gN-T6NDWQ1g')
+    const respJson = await resp.json();
+    console.log(respJson)
+  }
+
 }
 

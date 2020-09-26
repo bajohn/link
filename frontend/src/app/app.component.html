@@ -26,6 +26,11 @@
       Check on chain price
     </button>
   </div>
+  <div>
+    <button (click)="getViewCount()">
+      Check youtube viewcount
+    </button>
+  </div>
 
   <div *ngIf="priceFromChain >= 0">
     Returned price: {{priceFromChain}}

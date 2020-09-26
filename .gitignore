@@ -3,3 +3,4 @@ build
 node_modules
 terraform/.terraform
 lambdas_compiled
+.DS_Store
