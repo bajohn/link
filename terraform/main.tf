@@ -84,7 +84,7 @@ resource "aws_lambda_function" "backend" {
   s3_key           = "backend.zip"
   function_name    = "adbounty-backend"
   role             = aws_iam_role.iam_for_lambda_default.arn
-  handler          = "lambdas/backend.handler"
+  handler          = "lambdas/handler/backend.handler"
   layers           = [aws_lambda_layer_version.lib_layer.arn]
   runtime          = "python3.8"
   source_code_hash = filebase64sha256("../lambdas_compiled/backend.zip")

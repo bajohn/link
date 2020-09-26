@@ -34,7 +34,7 @@ done
 
 
 
-cd $DIR/lambdas
+cd $DIR/lambdas/handler
 for file_outer in ./** #separate zip for each lambda
 do
     cd $DIR
@@ -43,7 +43,7 @@ do
     shortfile=${file_outer:2:len-5} # change this to "not have the .py" exclude last 3 characters
 
 
-    zip -rX $OUTDIR/$shortfile.zip ./lambdas
+    zip -rX $OUTDIR/$shortfile.zip ./lambdas/handler
     
 
 done 
