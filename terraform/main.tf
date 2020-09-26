@@ -55,7 +55,7 @@ resource "aws_api_gateway_integration" "integration" {
   http_method             = aws_api_gateway_method.method.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.youtube_puller_lambda.invoke_arn
+  uri                     = aws_lambda_function.backend.invoke_arn
   request_parameters = {
     "integration.request.path.object" = "method.request.path.object"
   }
@@ -71,23 +71,23 @@ resource "aws_api_gateway_method_response" "response_200" {
 resource "aws_lambda_permission" "apigw_lambda" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.youtube_puller_lambda.function_name
+  function_name = aws_lambda_function.backend.function_name
   principal     = "apigateway.amazonaws.com"
 
-  source_arn = "arn:aws:execute-api:${local.region}:${local.account-id}:${aws_api_gateway_rest_api.api.id}/*/${aws_api_gateway_method.method.http_method}${aws_api_gateway_resource.resource.path}"
+  source_arn = "${aws_api_gateway_rest_api.api.execution_arn}/*/*/*"
 }
 
 
 
-resource "aws_lambda_function" "youtube_puller_lambda" {
+resource "aws_lambda_function" "backend" {
   s3_bucket        = "adbounty-lambda-code-bucket"
-  s3_key           = "youtube_puller.zip"
-  function_name    = "youtube-puller"
+  s3_key           = "backend.zip"
+  function_name    = "adbounty-backend"
   role             = aws_iam_role.iam_for_lambda_default.arn
-  handler          = "lambdas/youtube_puller.handler"
+  handler          = "lambdas/backend.handler"
   layers           = [aws_lambda_layer_version.lib_layer.arn]
   runtime          = "python3.8"
-  source_code_hash = filebase64sha256("../lambdas_compiled/youtube_puller.zip")
+  source_code_hash = filebase64sha256("../lambdas_compiled/backend.zip")
   timeout          = 60 # timeout in seconds. 
   memory_size      = 256
   environment {
@@ -102,7 +102,7 @@ resource "aws_secretsmanager_secret" "youtube-cred" {
 }
 
 resource "aws_iam_role" "iam_for_lambda_default" {
-  name = "iam_for_youtube_puller_lambda"
+  name = "iam_for_backend_lambda"
 
   assume_role_policy = <<EOF
 {
@@ -148,6 +148,11 @@ EOF
 resource "aws_iam_role_policy_attachment" "lambda_secrets_manager_attach" {
   role       = aws_iam_role.iam_for_lambda_default.name
   policy_arn = aws_iam_policy.lambda_secrets_manager_access.arn
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_dynamo_attach" {
+  role       = aws_iam_role.iam_for_lambda_default.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
 }
 
 
