@@ -2,7 +2,9 @@
 
 import boto3
 
-
+'''
+Sandbox for testing code snippets
+'''
 def main():
     session = boto3.session.Session()
     tableName = 'adbounty-users'
