@@ -4,7 +4,7 @@ import { Contract } from 'web3-eth-contract';
 import { WEB3 } from '../WEB3';
 import { AbiItem } from 'web3-utils';
 import { AdbountyApiService } from '../services/adbounty-api.service';
-import { AdontractTemplate } from '../interfaces'
+import { AdContractTemplate } from '../interfaces'
 import { FormControl, Validators } from '@angular/forms';
 import { isNull } from 'util';
 @Component({
@@ -26,7 +26,7 @@ export class MainComponent implements OnInit {
   loadingMyAds = true;
   myAdTemplates = [];
   addingNewOffering = false;
-  newOffering: AdontractTemplate = {
+  newOffering: AdContractTemplate = {
     name: '',
     description: '',
     validityDays: 0,
@@ -69,6 +69,10 @@ export class MainComponent implements OnInit {
     this.isKovan = network === 'kovan';
     this.error = !respJson['success'];
     this.loadingEmail = false;
+
+    //debug
+    const debug = await this.web3.eth.getBalance(this.defaultAccount);
+    console.log(debug);
   }
 
   async loadMyAds() {

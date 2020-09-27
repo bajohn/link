@@ -1,6 +1,6 @@
 
 
-export interface AdontractTemplate {
+export interface AdContractTemplate {
     name?: string
     owner?: string 
     validityDays?: number 

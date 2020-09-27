@@ -219,7 +219,7 @@ def __youtubeHandler(path):
         'items'][0]['statistics']['viewCount']
     data = dict(
         videoId=videoId,
-        viewCount=viewCount
+        viewCount=int(viewCount)
     )
 
     return __successResp(data)

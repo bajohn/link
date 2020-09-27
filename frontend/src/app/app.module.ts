@@ -12,15 +12,20 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
 
 import { FormsModule } from '@angular/forms';
+import { ContractOfferComponent } from './subcomponents/contract-offer/contract-offer.component';
+import { ContractConnectedComponent } from './subcomponents/contract-connected/contract-connected.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SandboxComponent,
     MainComponent,
-    AboutComponent
+    AboutComponent,
+    ContractOfferComponent,
+    ContractConnectedComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +35,8 @@ import { FormsModule } from '@angular/forms';
     MatGridListModule,
     MatButtonModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
