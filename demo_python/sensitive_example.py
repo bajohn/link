@@ -1,4 +1,0 @@
-
-MY_ACCOUNT = ''
-PRIVATE_KEY = ''
-CONTRACT_ADDRESS = ''
