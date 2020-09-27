@@ -1,1 +1,62 @@
-<p>contract-connected works!</p>
+<mat-card class="contract-card">
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>
+            {{contractAddress}}
+        </mat-card-title>
+        <!-- <mat-card-subtitle> View on etherscan </mat-card-subtitle> -->
+    </mat-card-header>
+    <fa-icon [icon]="faFileSignature" size="2x" class="icon-style"></fa-icon>
+
+    <mat-card-content>
+        <p>
+
+        </p>
+    </mat-card-content>
+    <mat-card-actions class="contract-footer">
+        <mat-grid-list cols="2" rowHeight="20px">
+
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                Buyer
+            </mat-grid-tile>
+
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                {{contractInfo.buyer}}
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                Seller
+            </mat-grid-tile>
+
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                {{contractInfo.seller}}
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                State
+            </mat-grid-tile>
+
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                {{contractInfo.state}}
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                Youtube ID
+            </mat-grid-tile>
+
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                {{parseYoutubeId()}}
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="canApprove()" [colspan]="1" [rowspan]="2">
+                <button mat-raised-button color="primary" (click)="doApprove()">
+                    Approve
+                </button>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="isActive()" [colspan]="1" [rowspan]="2">
+                <button mat-raised-button color="primary" (click)="doApprove()">
+                    Update Oracle
+                </button>
+            </mat-grid-tile>
+
+        </mat-grid-list>
+    </mat-card-actions>
+</mat-card>

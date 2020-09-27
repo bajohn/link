@@ -31,10 +31,34 @@
             <mat-grid-tile [colspan]="1" [rowspan]="1">
                 {{adTemplate.threshold}}
             </mat-grid-tile>
-            <mat-grid-tile *ngIf="allowCreate()" [colspan]="2" [rowspan]="1">
-                <button mat-raised-button color="primary" (click)="createContract()">
+
+            <mat-grid-tile *ngIf="allowCreate()" [colspan]="2" [rowspan]="2">
+                <button mat-raised-button color="primary" (click)="createContractToggle()">
                     Create Contract
                 </button>
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="showYoutubeField" [colspan]="2" [rowspan]="3" class="smaller">
+                Enter Youtube ID here. This ID can be found on any Youtube video by going to Share and copying from
+                "https://youtu.be/{{ '{' }}youtube ID{{ '}' }}"
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="showYoutubeField" [colspan]="2" [rowspan]="2">
+                <mat-form-field class="top-padding">
+                    <mat-label> Youtube ID </mat-label>
+                    <input matInput placeholder="gN-T6NDWQ1" [(ngModel)]="youtubeId">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="showYoutubeField && !isDeploying" [colspan]="2" [rowspan]="2">
+                <button mat-raised-button color="primary" (click)="contractToChain()">
+                    Submit to Blockchain
+                </button>
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="showYoutubeField && isDeploying" [colspan]="2" [rowspan]="2">
+                <mat-spinner [diameter]="30">
+
+                </mat-spinner>
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="!youtubeIdValid" [colspan]="2" [rowspan]="2">
+                Failed to validate given Youtube ID. Please try again.
             </mat-grid-tile>
         </mat-grid-list>
     </mat-card-actions>

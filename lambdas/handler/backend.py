@@ -28,6 +28,9 @@ def handler(event, context):
         elif endpoint == 'user':
             return __user(path, httpMethod, body)
 
+        elif endpoint == 'contract':
+            return __contract(path, httpMethod, body)
+
         elif endpoint == 'contract-template':
             return __contractTemplate(path, httpMethod, body)
         elif endpoint == 'contract-template-owned':
@@ -102,6 +105,31 @@ def __user(path, httpMethod, body):
         return __successResp(dynamoItem)
     else:
         raise ValueError('Bad Argument')
+
+
+def __contract(path, httpMethod, body):
+    '''
+    Insert given contract address into user's row
+    or get all connected contracts for a user.
+    '''
+    ethAddress = path.split('/')[2]
+    dynamoTable = __tableResource('adbounty-connected-contract')
+    contractItem = dynamoTable.get_item(
+        Key={
+            'ethAddress': ethAddress
+        }
+    )['Item']
+    if not __userExists(ethAddress):
+        raise ValueError('User at given eth address does not exist')
+    if httpMethod == 'POST':
+        contractAddress = body['contractAddress']
+        contractItem['contracts'].append(contractAddress)
+        dynamoTable.put_item(
+            Item=contractItem)
+        return __successResp(contractItem)
+
+    elif httpMethod == 'GET':
+        return __successResp(contractItem)
 
 
 def __contractTemplate(path, httpMethod, body):

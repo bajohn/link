@@ -55,8 +55,20 @@ contract AdBounty is ChainlinkClient {
         startTimeSec = block.timestamp;
     }
 
-    function checkState() public view returns (string memory) {
+    function getState() public view returns (string memory) {
         return state;
+    }
+
+    function getBuyer() public view returns (address) {
+        return address(buyer);
+    }
+
+    function getSeller() public view returns (address) {
+        return address(seller);
+    }
+
+    function getExternalUrl() public view returns (string memory) {
+        return externalUrl;
     }
 
     function mockCallback(uint256 viewCount) public {
@@ -124,5 +136,9 @@ contract AdBounty is ChainlinkClient {
             // solhint-disable-line no-inline-assembly
             result := mload(add(source, 32))
         }
+    }
+
+    // fallback function 
+    fallback () external payable {
     }
 }

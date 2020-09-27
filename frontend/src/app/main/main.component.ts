@@ -25,6 +25,8 @@ export class MainComponent implements OnInit {
 
   loadingMyAds = true;
   loadingAvailableAds = true;
+  loadingContractsConnected = true;
+
   myAdTemplates: AdContractTemplate[] = [];
   availableAdTemplates: AdContractTemplate[] = [];
   addingNewOffering = false;
@@ -38,6 +40,7 @@ export class MainComponent implements OnInit {
 
   };
   offeringSubmitError = '';
+  contractsConnected: string[] = []
 
 
 
@@ -57,6 +60,7 @@ export class MainComponent implements OnInit {
     if (this.metamaskValid()) {
       this.loadMyAds();
       this.loadAdsAvailable();
+      this.loadContractsConnected();
     }
   }
 
@@ -98,6 +102,15 @@ export class MainComponent implements OnInit {
     this.loadingAvailableAds = false;
   }
 
+  async loadContractsConnected() {
+    this.loadingContractsConnected = true;
+    const endpoint = 'contract/' + this.defaultAccount;
+    const resp = await fetch(this.api.apiUrl(endpoint));
+    const respJson = await resp.json();
+    this.contractsConnected = respJson['contracts'];
+    this.error = !respJson['success'];
+    this.loadingContractsConnected = false;
+  }
 
   askForEmail() {
     return this.contactEmail.length === 0 && !this.loadingEmail || this.editEmail;
