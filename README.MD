@@ -80,21 +80,3 @@ Installation
     ```
 
 
-## Working 
-Create a new contract at 
-http://localhost:4200
-
-Or access an existing contract at:
-http://localhost:4200/contract/0xd9455befed4a124b0515881806ba159b3966cdbb
-
-✅ Compile contract using truffle / chainlink truffle box
-✅ Insert compiled contract into Angular source code
-✅ Deploy contract from web3-integrated frontend using Metamask and pure browser Javascript
-✅ Trigger contract call to Chainlink Oracle, which pulls from a simple API
-✅ Check the result of this API call
-
-## TODO
-✅ - Integrate with credentialed API such as Youtube
-- Figure out how polling works, aka how to trigger on an API event without constantly polling.
-
-## Notes
