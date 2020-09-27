@@ -6,6 +6,7 @@ import { AbiItem } from 'web3-utils';
 import { AdbountyApiService } from '../services/adbounty-api.service';
 import { AdontractTemplate } from '../interfaces'
 import { FormControl, Validators } from '@angular/forms';
+import { isNull } from 'util';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -19,6 +20,8 @@ export class MainComponent implements OnInit {
   loadingEmail = true;
   editEmail = false;
   error = false;
+  isKovan = true;
+  hasMetaMask = true;
 
   loadingMyAds = true;
   myAdTemplates = [];
@@ -39,11 +42,19 @@ export class MainComponent implements OnInit {
   constructor(
     @Inject(WEB3) private web3: Web3,
     private api: AdbountyApiService
-  ) { }
+  ) {
+    this.hasMetaMask = !isNull(web3.givenProvider);
+  }
+
+  metamaskValid() {
+    return this.isKovan && this.hasMetaMask;
+  }
 
   async ngOnInit() {
-    this.initAccount();
-    this.loadMyAds();
+    await this.initAccount();
+    if (this.metamaskValid()) {
+      this.loadMyAds();
+    }
   }
 
   async initAccount() {
@@ -54,14 +65,14 @@ export class MainComponent implements OnInit {
     const resp = await fetch(this.api.apiUrl(endpoint));
     const respJson = await resp.json();
     this.contactEmail = respJson['contactEmail'];
+    const network = await this.web3.eth.net.getNetworkType()
+    this.isKovan = network === 'kovan';
     this.error = !respJson['success'];
     this.loadingEmail = false;
   }
 
   async loadMyAds() {
     this.loadingMyAds = true;
-    const accounts = await this.web3.eth.getAccounts();
-    this.defaultAccount = accounts[0];
     const endpoint = 'contract-template-owned/' + this.defaultAccount;
     const resp = await fetch(this.api.apiUrl(endpoint));
     const respJson = await resp.json();
@@ -100,7 +111,7 @@ export class MainComponent implements OnInit {
     }
   }
 
-  toggleAddOffering() {
+  toggleAdOffering() {
     this.addingNewOffering = !this.addingNewOffering;
     console.log(this.newOffering);
   }
@@ -109,7 +120,7 @@ export class MainComponent implements OnInit {
     this.newOffering.validitySec = inputDays * 3600 * 24;
   }
 
-  submitOffering() {
+  submitOfferingClick() {
     this.offeringSubmitError = '';
     const name = this.newOffering.name;
     if (name.length === 0) {
@@ -133,8 +144,28 @@ export class MainComponent implements OnInit {
     }
 
     if (this.offeringSubmitError.length === 0) {
-
+      this.doOfferingSubmit();
     }
+  }
+
+  async doOfferingSubmit() {
+    this.loadingMyAds = true;
+    const endpoint = 'contract-template/' + this.defaultAccount;
+    const resp = await fetch(this.api.apiUrl(endpoint), {
+      method: 'POST',
+      'body': JSON.stringify({
+        name: this.newOffering.name,
+        description: this.newOffering.description,
+        validitySec: this.newOffering.validitySec,
+        payment: this.newOffering.payment,
+        threshold: this.newOffering.threshold,
+      })
+    });
+    const respJson = await resp.json();
+    this.myAdTemplates = respJson['templates'];
+    this.error = !respJson['success'];
+    this.loadMyAds();
+    this.addingNewOffering = false;
   }
 
 }

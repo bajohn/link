@@ -117,8 +117,10 @@ def __contractTemplate(path, httpMethod, body):
             id=newId,
             name=body['name'],
             owner=ethAddress,
-            validityMs=body['validityMs'],
-            paymentTiers=body['paymentTiers']
+            validitySec=int(body['validitySec']),
+            payment=int(body['payment']),
+            threshold=int(body['threshold']),
+            description=body['description']
         )
         dynamoTable = __tableResource('adbounty-contract-template')
 
@@ -160,6 +162,19 @@ def __contractTemplateOwned(path, httpMethod, body):
                 'ethAddress': ethAddress
             }
         )['Item']
+        templateIds = dynamoItem['templates']
+        dynamoTable = __tableResource('adbounty-contract-template')
+        templates = []
+        for templateId in templateIds:
+            template = dynamoTable.get_item(
+                Key={
+                    'id': templateId
+                }
+            )['Item']
+            for key in ['validitySec', 'payment','threshold']:
+                template[key] = int(template[key])
+            templates.append(template)
+        dynamoItem['templates'] = templates
         return __successResp(dynamoItem)
     else:
         raise ValueError('Bad Argument')

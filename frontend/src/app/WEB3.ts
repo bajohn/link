@@ -18,7 +18,8 @@ export const WEB3 = new InjectionToken<Web3>('web3', {
       provider.enable();
       return new Web3(provider);
     } catch (err) {
-      throw new Error('Non-Ethereum browser detected. You should consider trying Mist or MetaMask!');
+      //throw new Error('Non-Ethereum browser detected. You should consider trying Mist or MetaMask!');
+      return new Web3('');
     }
   }
 });

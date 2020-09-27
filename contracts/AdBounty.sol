@@ -25,7 +25,7 @@ contract AdBounty {
         paymentAmount = _paymentAmount;
         buyer = _buyer;
         seller = _seller;
-        startTimeSec = block.timestamp;
+        startTimeSec = -1;
         durationSec = _durationSec;
         youtubeId = _youtubeId;
         state = "PENDING";
@@ -34,6 +34,7 @@ contract AdBounty {
     function validate() public {
         require(msg.sender == buyer);
         state = "ACTIVE";
+        startTimeSec = block.timestamp;
     }
 
     function checkState() public view returns (string memory) {

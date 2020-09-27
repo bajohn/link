@@ -3,132 +3,141 @@
         Ad Bounty Demo
     </h1>
 
-
-    <div *ngIf="loadingEmail">
-        <mat-spinner [diameter]="30">
-
-        </mat-spinner>
+    <div *ngIf="!hasMetaMask">
+        Non-Ethereum browser detected. You should consider trying Mist or MetaMask!
     </div>
-    <div *ngIf="askForEmail()">
-        <div>
-            Welcome to Ad Bounty. Enter your email address (this is a demo, so fake email address if fine!)
-        </div>
-        <div>
-            <input type="text" [(ngModel)]="formEmail" (keypress)="checkKey($event)">
-        </div>
-        <div>
-            <button mat-raised-button color="primary" (click)="submitEmail()">
-                Submit
-            </button>
-        </div>
+    <div *ngIf="!isKovan">
+        Ad Bounty is built using the Kovan Testnet. Please switch via Metamask or Mist and reload.
     </div>
-    <div *ngIf="showWelcome()">
-        <div>
-            Welcome to Ad Bounty, {{defaultAccount}}
-        </div>
+    <div *ngIf="metamaskValid()">
 
-    </div>
-    <div>
-        <h1>
-            Available Advertisements
-        </h1>
-        <div>
-            If you are a content creator and are looking to sell advertising space, choose from offerings below.
-        </div>
-
-
-    </div>
-    <div>
-        <h1>
-            My Advertisements for Sale
-        </h1>
-        <div>
-            Here are the advertisements you are offering for sale.
-        </div>
-        <div *ngIf="loadingMyAds">
+        <div *ngIf="loadingEmail">
             <mat-spinner [diameter]="30">
 
             </mat-spinner>
         </div>
-        <div *ngIf="!loadingMyAds">
-            <button mat-raised-button color="primary" (click)="toggleAddOffering()">
-                + Add New
-            </button>
+        <div *ngIf="askForEmail()">
+            <div>
+                Welcome to Ad Bounty. Enter your email address (this is a demo, so fake email address if fine!)
+            </div>
+            <div>
+                <input type="text" [(ngModel)]="formEmail" (keypress)="checkKey($event)">
+            </div>
+            <div>
+                <button mat-raised-button color="primary" (click)="submitEmail()">
+                    Submit
+                </button>
+            </div>
+        </div>
+        <div *ngIf="showWelcome()">
+            <div>
+                Welcome to Ad Bounty, {{defaultAccount}}
+            </div>
 
-            <div *ngIf="addingNewOffering">
-                <div class="top-padding">
-                    Name of Contract
-                </div>
-                <div>
-                    <mat-form-field>
-                        <mat-label> Contract Name </mat-label>
-                        <input matInput placeholder="Name" [(ngModel)]="newOffering.name">
-                    </mat-form-field>
-                </div>
-                <div class="top-padding">
-                    Description of Contract. Include any constraints on the ad here. Examples would
-                    be requested length of the ad, placement in the video, and verbiage.
-                </div>
-                <div>
-                    <mat-form-field>
-                        <mat-label> Contract Description </mat-label>
-                        <textarea matInput placeholder="Description" [(ngModel)]="newOffering.description">
-                        </textarea>
-                    </mat-form-field>
-                </div>
-                <div class="top-padding">
-                    Contract validity (Days)
-                </div>
-                <div>
-                    <mat-form-field>
-                        <mat-label> Days </mat-label>
-                        <input type="number" matInput placeholder="10" [(ngModel)]="newOffering.validityDays"
-                            (ngModelChange)="validityConvert($event)" />
-                    </mat-form-field>
-                </div>
-                <div class="top-padding">
-                    Payment amount (Wei)
-                </div>
-                <div>
-                    <mat-form-field>
-                        <mat-label> Payment </mat-label>
-                        <input matInput placeholder="100000" [(ngModel)]="newOffering.payment">
-                    </mat-form-field>
-                </div>
-                <div class="top-padding">
-                    Payment threshold (View Count)
-                </div>
-                <div>
-                    <mat-form-field>
-                        <mat-label> Threshold </mat-label>
-                        <input matInput placeholder="20000" [(ngModel)]="newOffering.threshold">
-                    </mat-form-field>
-                </div>
-
-
-
-                <div>
-                    <button mat-raised-button color="primary" (click)="submitOffering()">
-                        Submit
-                    </button>
-                </div>
-                <div>
-                    {{offeringSubmitError}}
-                </div>
+        </div>
+        <div>
+            <h1>
+                Available Advertisements
+            </h1>
+            <div>
+                If you are a content creator and are looking to sell advertising space, choose from offerings below.
             </div>
 
 
+        </div>
+        <div>
+            <h1>
+                My Advertisements for Sale
+            </h1>
+            <div>
+                Here are the advertisements you are offering for sale.
+            </div>
+            <div *ngIf="loadingMyAds">
+                <mat-spinner [diameter]="30">
+
+                </mat-spinner>
+            </div>
+            <div *ngIf="!loadingMyAds">
+                <button mat-raised-button color="primary" (click)="toggleAdOffering()">
+                    + Add New
+                </button>
+
+                <div *ngIf="addingNewOffering">
+                    <div class="top-padding">
+                        Name of Contract
+                    </div>
+                    <div>
+                        <mat-form-field>
+                            <mat-label> Contract Name </mat-label>
+                            <input matInput placeholder="Name" [(ngModel)]="newOffering.name">
+                        </mat-form-field>
+                    </div>
+                    <div class="top-padding">
+                        Description of Contract. Include any constraints on the ad here. Examples would
+                        be requested length of the ad, placement in the video, and verbiage.
+                    </div>
+                    <div>
+                        <mat-form-field>
+                            <mat-label> Contract Description </mat-label>
+                            <textarea matInput placeholder="Description" [(ngModel)]="newOffering.description">
+                            </textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="top-padding">
+                        Contract validity (Days)
+                    </div>
+                    <div>
+                        <mat-form-field>
+                            <mat-label> Days </mat-label>
+                            <input type="number" matInput placeholder="10" [(ngModel)]="newOffering.validityDays"
+                                (ngModelChange)="validityConvert($event)" />
+                        </mat-form-field>
+                    </div>
+                    <div class="top-padding">
+                        Payment amount (Wei)
+                    </div>
+                    <div>
+                        <mat-form-field>
+                            <mat-label> Payment </mat-label>
+                            <input matInput placeholder="100000" [(ngModel)]="newOffering.payment">
+                        </mat-form-field>
+                    </div>
+                    <div class="top-padding">
+                        Payment threshold (View Count)
+                    </div>
+                    <div>
+                        <mat-form-field>
+                            <mat-label> Threshold </mat-label>
+                            <input matInput placeholder="20000" [(ngModel)]="newOffering.threshold">
+                        </mat-form-field>
+                    </div>
 
 
 
-            <mat-grid-list cols="8" rowHeight="40px">
+                    <div>
+                        <button mat-raised-button color="primary" (click)="submitOfferingClick()">
+                            Submit
+                        </button>
+                    </div>
+                    <div>
+                        {{offeringSubmitError}}
+                    </div>
+                </div>
 
-                <mat-grid-tile [colspan]="3" [rowspan]="1">
 
-                </mat-grid-tile>
 
-            </mat-grid-list>
+
+
+                <mat-grid-list cols="8" rowHeight="40px">
+
+                    <mat-grid-tile [colspan]="3" [rowspan]="1">
+
+                    </mat-grid-tile>
+
+                </mat-grid-list>
+            </div>
         </div>
     </div>
+
 
 </div>
