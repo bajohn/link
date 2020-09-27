@@ -11,13 +11,13 @@ contract AdBounty {
     uint256 durationSec;
     string youtubeId;
     string state;
+    bool paymentMade = false;
 
     constructor(
         uint256 _viewThreshold,
         uint256 _paymentAmount,
         address payable _buyer,
         address payable _seller,
-        uint256 _startTimeSec,
         uint256 _durationSec,
         string memory _youtubeId
     ) public {
@@ -25,7 +25,7 @@ contract AdBounty {
         paymentAmount = _paymentAmount;
         buyer = _buyer;
         seller = _seller;
-        startTimeSec = _startTimeSec;
+        startTimeSec = block.timestamp;
         durationSec = _durationSec;
         youtubeId = _youtubeId;
         state = "PENDING";
@@ -40,5 +40,15 @@ contract AdBounty {
         return state;
     }
 
-    function mockCallback() public {}
+    function mockCallback(uint256 viewCount) public {
+        if (startTimeSec + durationSec < block.timestamp || paymentMade) {
+            state = "EXPIRED";
+        } else {
+            if (viewCount > viewThreshold) {
+                seller.transfer(paymentAmount);
+                state = "EXPIRED";
+                paymentMade = true;
+            }
+        }
+    }
 }

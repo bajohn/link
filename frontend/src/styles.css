@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+h1.header-title {
+    font-size:48px;
+}
+
+
+html, body { height: 100%; background-color:#e2e2e2; padding:20px;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

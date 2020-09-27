@@ -1,0 +1,38 @@
+<div>
+    <button (click)="deployContract()">
+      Deploy contract
+    </button>
+  </div>
+  <div *ngIf="isLoading">
+    Deploying...
+  </div>
+  <div *ngIf="isDeployed">
+    <div>
+      Contract deployed!
+    </div>
+  
+    <div>
+      <a [href]="getContractAddress()" target="_blank">
+        View contract on etherscan
+      </a>
+    </div>
+    <div>
+      <button (click)="requestUpdatedPrice()">
+        Request update from Oracle
+      </button>
+    </div>
+    <div>
+      <button (click)="checkState()">
+        Check state
+      </button>
+    </div>
+    <div>
+      <button (click)="getViewCount()">
+        Check youtube viewcount
+      </button>
+    </div>
+  
+    <div *ngIf="priceFromChain >= 0">
+      Returned price: {{priceFromChain}}
+    </div>
+  </div>
