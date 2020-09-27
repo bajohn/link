@@ -42,9 +42,20 @@
             <div>
                 If you are a content creator and are looking to sell advertising space, choose from offerings below.
             </div>
+            <div *ngIf="loadingAvailableAds">
+                <mat-spinner [diameter]="30">
 
+                </mat-spinner>
+            </div>
+            <div *ngIf="!loadingAvailableAds">
+                <app-contract-offer [defaultAccount]="defaultAccount" [adTemplate]="adTemplate"
+                    *ngFor="let adTemplate of availableAdTemplates">
+
+                </app-contract-offer>
+            </div>
 
         </div>
+
         <div>
             <h1>
                 My Advertisements for Sale
@@ -123,7 +134,8 @@
                 <div>
                     {{offeringSubmitError}}
                 </div>
-                <app-contract-offer [adTemplate]="adTemplate" *ngFor="let adTemplate of myAdTemplates">
+                <app-contract-offer [defaultAccount]="defaultAccount" [adTemplate]="adTemplate"
+                    *ngFor="let adTemplate of myAdTemplates">
 
                 </app-contract-offer>
 

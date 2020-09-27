@@ -24,7 +24,9 @@ export class MainComponent implements OnInit {
   hasMetaMask = true;
 
   loadingMyAds = true;
-  myAdTemplates = [];
+  loadingAvailableAds = true;
+  myAdTemplates: AdContractTemplate[] = [];
+  availableAdTemplates: AdContractTemplate[] = [];
   addingNewOffering = false;
   newOffering: AdContractTemplate = {
     name: '',
@@ -54,6 +56,7 @@ export class MainComponent implements OnInit {
     await this.initAccount();
     if (this.metamaskValid()) {
       this.loadMyAds();
+      this.loadAdsAvailable();
     }
   }
 
@@ -83,6 +86,16 @@ export class MainComponent implements OnInit {
     this.myAdTemplates = respJson['templates'];
     this.error = !respJson['success'];
     this.loadingMyAds = false;
+  }
+
+  async loadAdsAvailable() {
+    this.loadingAvailableAds = true;
+    const endpoint = 'contract-template-available/' + this.defaultAccount;
+    const resp = await fetch(this.api.apiUrl(endpoint));
+    const respJson = await resp.json();
+    this.availableAdTemplates = respJson['templates'];
+    this.error = !respJson['success'];
+    this.loadingAvailableAds = false;
   }
 
 

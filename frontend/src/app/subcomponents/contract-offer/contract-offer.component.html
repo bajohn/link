@@ -6,7 +6,7 @@
         </mat-card-title>
         <mat-card-subtitle> Offer </mat-card-subtitle>
     </mat-card-header>
-    <fa-icon [icon]="faFileSignature" size="2x" class="icon-style" ></fa-icon>
+    <fa-icon [icon]="faFileSignature" size="2x" class="icon-style"></fa-icon>
 
     <mat-card-content>
         <p>
@@ -30,6 +30,11 @@
 
             <mat-grid-tile [colspan]="1" [rowspan]="1">
                 {{adTemplate.threshold}}
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="allowCreate()" [colspan]="2" [rowspan]="1">
+                <button mat-raised-button color="primary" (click)="createContract()">
+                    Create Contract
+                </button>
             </mat-grid-tile>
         </mat-grid-list>
     </mat-card-actions>

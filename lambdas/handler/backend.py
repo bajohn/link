@@ -6,6 +6,7 @@ import os
 import uuid
 import boto3
 import requests
+import traceback
 
 
 def handler(event, context):
@@ -41,8 +42,8 @@ def handler(event, context):
         else:
             # Catch all default response, return 400
             return __errorResp('Unknown endpoint')
-    except Exception as e:
-        return __errorResp(str(e))
+    except Exception:
+        return __errorResp(str(traceback.format_exc()))
 
 
 def __user(path, httpMethod, body):
@@ -163,21 +164,42 @@ def __contractTemplateOwned(path, httpMethod, body):
             }
         )['Item']
         templateIds = dynamoItem['templates']
-        dynamoTable = __tableResource('adbounty-contract-template')
-        templates = []
-        for templateId in templateIds:
-            template = dynamoTable.get_item(
-                Key={
-                    'id': templateId
-                }
-            )['Item']
-            for key in ['validitySec', 'payment','threshold']:
-                template[key] = int(template[key])
-            templates.append(template)
-        dynamoItem['templates'] = templates
+        dynamoItem['templates'] = __getTemplates(templateIds)
         return __successResp(dynamoItem)
     else:
         raise ValueError('Bad Argument')
+
+
+def __contractTemplateAvailable(path, httpMethod, body):
+    ethAddress = path.split('/')[2]
+    dynamoTable = __tableResource('adbounty-contract-template-available')
+    if httpMethod == 'GET':
+        dynamoItem = dynamoTable.get_item(
+            Key={
+                'ethAddress': ethAddress
+            }
+        )['Item']
+        templateIds = dynamoItem['templates']
+        dynamoItem['templates'] = __getTemplates(templateIds)
+        return __successResp(dynamoItem)
+    else:
+        raise ValueError('Bad Argument')
+
+
+def __getTemplates(templateIds):
+    dynamoTable = __tableResource('adbounty-contract-template')
+    templates = []
+    for templateId in templateIds:
+        template = dynamoTable.get_item(
+            Key={
+                'id': templateId
+            }
+        )['Item']
+        for key in ['validitySec', 'payment', 'threshold']:
+            template[key] = int(template[key])
+        templates.append(template)
+
+    return templates
 
 
 def __userExists(ethAddress):
@@ -188,10 +210,6 @@ def __userExists(ethAddress):
         }
     )
     return 'Item' in dynamoResp
-
-
-def __contractTemplateAvailable(path, httpMethod, body):
-    return None
 
 
 def __tableResource(table_name):

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AdContractTemplate } from '../../interfaces'
-import { faPause, faFileSignature, faShip, faPlay, faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { faFileSignature } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-contract-offer',
@@ -10,9 +10,18 @@ import { faPause, faFileSignature, faShip, faPlay, faQuestion } from '@fortaweso
 export class ContractOfferComponent implements OnInit {
   faFileSignature = faFileSignature;
   @Input() adTemplate: AdContractTemplate;
+  @Input() defaultAccount: string;
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  createContract() {
+
+  }
+
+  allowCreate() {
+    return this.defaultAccount !== this.adTemplate.owner;
   }
 
 }
