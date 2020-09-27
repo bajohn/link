@@ -7,6 +7,7 @@ import { SandboxComponent } from './sandbox/sandbox.component';
 import { MainComponent } from './main/main.component';
 import { AboutComponent } from './about/about.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -36,7 +37,8 @@ import { ContractConnectedComponent } from './subcomponents/contract-connected/c
     MatButtonModule,
     MatInputModule,
     FormsModule,
-    MatCardModule
+    MatCardModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -102,6 +102,7 @@
                             <input matInput placeholder="100000" [(ngModel)]="newOffering.payment">
                         </mat-form-field>
                     </div>
+
                     <div class="top-padding">
                         Payment threshold (View Count)
                     </div>
@@ -111,19 +112,17 @@
                             <input matInput placeholder="20000" [(ngModel)]="newOffering.threshold">
                         </mat-form-field>
                     </div>
-
-
-
-                    <div>
+                    <div class="top-padding">
                         <button mat-raised-button color="primary" (click)="submitOfferingClick()">
                             Submit
                         </button>
                     </div>
-                    <div>
-                        {{offeringSubmitError}}
-                    </div>
-                </div>
 
+
+                </div>
+                <div>
+                    {{offeringSubmitError}}
+                </div>
                 <app-contract-offer [adTemplate]="adTemplate" *ngFor="let adTemplate of myAdTemplates">
 
                 </app-contract-offer>
@@ -131,13 +130,6 @@
 
 
 
-                <mat-grid-list cols="8" rowHeight="40px">
-
-                    <mat-grid-tile [colspan]="3" [rowspan]="1">
-
-                    </mat-grid-tile>
-
-                </mat-grid-list>
             </div>
         </div>
     </div>

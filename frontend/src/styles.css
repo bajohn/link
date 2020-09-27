@@ -6,8 +6,16 @@ h1.header-title {
 .top-padding {
     padding-top:15px;
 }
-.contract-card {
+mat-card.contract-card {
     max-width: 400px;
+    margin:10px;
+    display: inline-block;
+  }
+
+  .contract-footer .mat-grid-tile .mat-figure {
+    font-weight:bold;
+    align-items: left;
+    justify-content: left;
   }
 
 html, body { height: 100%; background-color:#e2e2e2; padding:20px;}
