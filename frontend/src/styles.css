@@ -3,6 +3,10 @@ h1.header-title {
     font-size:48px;
 }
 
+.top-padding {
+    padding-top:15px;
+}
+
 
 html, body { height: 100%; background-color:#e2e2e2; padding:20px;}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

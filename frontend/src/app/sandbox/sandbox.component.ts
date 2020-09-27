@@ -4,7 +4,7 @@ import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 import { WEB3 } from '../WEB3';
 import { AbiItem } from 'web3-utils';
-const contract = require('truffle-contract');
+//const contract = require('truffle-contract');
 
 // import * as sampleStore from '../../../build/contracts/SampleStore.json'
 import * as AdBounty from '../../../../build/contracts/AdBounty.json'
